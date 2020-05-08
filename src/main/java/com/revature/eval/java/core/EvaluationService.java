@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Spliterator;
 import java.util.concurrent.CountDownLatch;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import javax.sound.midi.Soundbank;
@@ -275,9 +277,6 @@ public class EvaluationService {
 				
 			}
 		}
-
-		
-		System.out.print(map); 
 		
 		return map;
 	}
@@ -380,33 +379,53 @@ public class EvaluationService {
 	public String toPigLatin(String string) {
 		
 		char first = string.charAt(0);
-		char[] word = string.toCharArray();
+		String[] stringOfWord = string.split("");
 		String str=String.valueOf(first);  
-		String[] arrayOfVowels = {"A", "E", "I", "O", "U", "a", "e", "i", "o", "u" };
-		char[] arrayCharOfVowels = {'A', 'E', 'I', 'O', 'U', 'a', 'e', 'i', 'o', 'u' };
+		String string2 = "AEIOUaeiou";
+//		String[] arrayOfVowels = {"A", "E", "I", "O", "U", "a", "e", "i", "o", "u" };
+//		char[] arrayCharOfVowels = {'A', 'E', 'I', 'O', 'U', 'a', 'e', 'i', 'o', 'u' };
+		
 		int count = 0;
+		String temp = "";
 		
-		for(String wovel: arrayOfVowels){
-			if(wovel.equals(str)) {
-				String pigLatinWord = string + "ay";
-					System.out.println(pigLatinWord);
-			} else {
-				for (char constant: word) {
-					
-					while(Arrays.asList(arrayCharOfVowels).contains(constant)) {
-						constant += constant;
-						count++;
-						
-						}
-					String pigLatinWord = string.substring(count) + constant + "ay";
-//					System.out.println(pigLatinWord);
-					}
+		for(String wovel: stringOfWord){
+			if(string2.contains(wovel)) {
+				if(wovel.equals(str)) {
+					String pigLatinWord = string + "ay";
+					return pigLatinWord;			
 				}
-			
+			} 
+		}
+		 
+				
+//				first = temp.charAt(0);
+//				str = String.valueOf(first);
+//				System.out.println(string);
+//				
+//				while (!string2.contains(str)) {
+//					System.out.println(str); //t
+//					
+//					String newString = str;
+//					temp = string.substring(1) + str;
+//					
+//					String pigLatinWord = temp + newString;
+//					
+//					char first1 = temp.charAt(0);
+//					System.out.println(first1);
+//					str = String.valueOf(first1);
+//					
+////					String pigLatinWord = temp + str;
+//					System.out.println(pigLatinWord);
+//					count++;
+//					
+//					
+//					
+//					
+//			}
+//				String pigLatinWord = string2.substring(count + 1) + "ay";	
 
-			}
-						
-		
+				
+
 		
 		return null;
 	}
@@ -555,10 +574,31 @@ public class EvaluationService {
 	 * @param i
 	 * @return
 	 */
-	public int calculateNthPrime(int i) {
-		// TODO Write an implementation for this method declaration
-		return 0;
-	}
+		public int calculateNthPrime(int i) {
+			ArrayList<Integer> arr = new ArrayList<Integer>();
+		    arr.add(2);
+		    arr.add(3);
+	
+		    int counter = 4;
+	
+		    while(arr.size() < i) {
+		        if(counter % 2 != 0 && counter % 3 != 0) {
+		            int temp = 4;
+		            while(temp*temp <= counter) {
+		                if(counter % temp == 0)
+		                    break;
+		                temp ++;
+		            }
+		            if(temp*temp > counter) {
+		                arr.add(counter);
+		            }
+		        }
+		        counter++;
+		    }
+	
+		     return arr.get(i-1);
+		
+		}
 
 	/**
 	 * 13 & 14. Create an implementation of the atbash cipher, an ancient encryption
@@ -797,8 +837,35 @@ public class EvaluationService {
 	 * @return
 	 */
 	public int solveWordProblem(String string) {
-		// TODO Write an implementation for this method declaration
-		return 0;
-	}
+		String pattern = "What\\sis\\s([-]?\\d+)\\s(plus|minus|multiplied\\sby|divided\\sby)\\s([-]?\\d+)\\?";
+        Pattern p = Pattern.compile(pattern);
+        Matcher matcher = p.matcher(string);
+        int result = 0;
+        while (matcher.find()) {
+
+            int val1 = Integer.parseInt(matcher.group(1));
+            int val2 = Integer.parseInt(matcher.group(3));
+            String oper = matcher.group(2);
+            
+            switch (oper) {
+
+                case "plus" : 
+                	result =  val1 + val2;
+                	break;
+                case "minus" : 
+                	result =  val1 - val2;
+                	break;
+                case "multiplied by" : 
+                	result = val1 * val2;
+                	break;
+                case "divided by" : 
+                	result =  val1 / val2;
+                	break;
+                default :
+                    break;
+            };          
+	     }
+        return result;
+	}       
 
 }
