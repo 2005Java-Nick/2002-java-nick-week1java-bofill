@@ -381,53 +381,17 @@ public class EvaluationService {
 		char first = string.charAt(0);
 		String[] stringOfWord = string.split("");
 		String str=String.valueOf(first);  
-		String string2 = "AEIOUaeiou";
-//		String[] arrayOfVowels = {"A", "E", "I", "O", "U", "a", "e", "i", "o", "u" };
-//		char[] arrayCharOfVowels = {'A', 'E', 'I', 'O', 'U', 'a', 'e', 'i', 'o', 'u' };
-		
-		int count = 0;
-		String temp = "";
-		
-		for(String wovel: stringOfWord){
-			if(string2.contains(wovel)) {
-				if(wovel.equals(str)) {
-					String pigLatinWord = string + "ay";
-					return pigLatinWord;			
-				}
-			} 
-		}
-		 
-				
-//				first = temp.charAt(0);
-//				str = String.valueOf(first);
-//				System.out.println(string);
-//				
-//				while (!string2.contains(str)) {
-//					System.out.println(str); //t
-//					
-//					String newString = str;
-//					temp = string.substring(1) + str;
-//					
-//					String pigLatinWord = temp + newString;
-//					
-//					char first1 = temp.charAt(0);
-//					System.out.println(first1);
-//					str = String.valueOf(first1);
-//					
-////					String pigLatinWord = temp + str;
-//					System.out.println(pigLatinWord);
-//					count++;
-//					
-//					
-//					
-//					
-//			}
-//				String pigLatinWord = string2.substring(count + 1) + "ay";	
-
-				
+		String string2 = "A E I O U a e i o u";
 
 		
-		return null;
+		if(string2.contains(str)) {
+			String pigLatinWord = string + "ay";
+			return pigLatinWord;		
+			
+		}	
+//		more to code 
+		return "string";
+			
 	}
 
 	/**
@@ -584,7 +548,7 @@ public class EvaluationService {
 		    while(arr.size() < i) {
 		        if(counter % 2 != 0 && counter % 3 != 0) {
 		            int temp = 4;
-		            while(temp*temp <= counter) {
+		            while( temp * temp <= counter) {
 		                if(counter % temp == 0)
 		                    break;
 		                temp ++;
@@ -633,8 +597,33 @@ public class EvaluationService {
 		 * @return
 		 */
 		public static String encode(String string) {
-			// TODO Write an implementation for this method declaration
-			return null;
+			
+			string = string.toLowerCase();
+			string = string.replaceAll("[, .]", "");
+			String[] strArray = string.split("");
+			String plain = "abcdefghijklmnopqrstuvwxyz";
+			String cipher = "zyxwvutsrqponmlkjihgfedcba";
+			
+			String[] strArrayPlain = plain.split("");
+			String[] strArrayCipher = cipher.split("");
+			String cipherWord = "";
+			
+			Map<String, String> cipherMap = new HashMap<>();
+			
+			for (int i = 0; i < strArrayCipher.length; i++) {
+				cipherMap.put(strArrayPlain[i], strArrayCipher[i]);
+			}
+			
+			for (String l: strArray) {
+				String letter = cipherMap.get(l);
+				cipherWord = cipherWord + letter;				
+			}
+
+			if (cipherWord.length() > 5) {
+				cipherWord = cipherWord.replaceAll(".....", "$0 ");
+			}
+			
+			return cipherWord;
 		}
 
 		/**
@@ -690,8 +679,19 @@ public class EvaluationService {
 	 * @return
 	 */
 	public boolean isPangram(String string) {
-		// TODO Write an implementation for this method declaration
-		return false;
+		string = string.replaceAll(" ", "");
+
+		char[] array = string.toCharArray();
+		
+		for (char c: array){
+			 int val = (int) c;
+				if (val < 97 ) {
+				}
+					else if (val > 122) {
+				}
+				return false;
+		}
+		return true;
 	}
 
 	/**
